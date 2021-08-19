@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     private Rigidbody2D playerRB;
     public float runSpeed = 40f;
+    public float walkSpeed = 10f;
     float hMove = 0f;       //horizontal movement
     bool jump = false;
     bool crouch = false;
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+
     }
 
     // Update is called once per frame
