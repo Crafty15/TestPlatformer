@@ -81417,7 +81417,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.0168421, y: 1}
+    m_SensorSize: {x: 2.1969697, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -84888,6 +84888,7 @@ GameObject:
   - component: {fileID: 753585000}
   - component: {fileID: 753585001}
   - component: {fileID: 753585002}
+  - component: {fileID: 753585003}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -85144,6 +85145,25 @@ MonoBehaviour:
   examineText: {fileID: 277821569}
   isExamining: 0
   pickedItems: []
+--- !u!320 &753585003
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753584993}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 29fd5ef8ddd9fb64abac566ad855918b, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -1874865952064806386, guid: 29fd5ef8ddd9fb64abac566ad855918b, type: 2}
+    value: {fileID: 753585001}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &789906441
 GameObject:
   m_ObjectHideFlags: 0
