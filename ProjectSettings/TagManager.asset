@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Tiles
   - Water
   - UI
   - J_Walls
   - Item
-  - 
-  - 
+  - GroundTiles
+  - Walls
   - 
   - 
   - 
