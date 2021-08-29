@@ -27,26 +27,35 @@ public class EnemyGFX : MonoBehaviour
     {
         //pick between chasing the player and wandering
         if (CanSeePlayer(viewDist)) {
-            Debug.Log("Can see player");
+            //Debug.Log("Can see player");
             //set player as target
             bobbyAI.destination = playerT.transform.position;
             //bobbyAI.maxSpeed = 4f;
-            Debug.Log("Can see player");
+            //Debug.Log("Can see player");
             enemyAnimator.SetBool("canSeePlayer", true);
         }
         else {
             //Debug.Log("Cant see player");
             //set to wander
             //If AI is not already calculating a path and has reached end of path or has no path at all
+            //Debug.Log("Path pending: " + bobbyAI.pathPending);
+            //Debug.Log("Reached end of path: " + bobbyAI.reachedEndOfPath);
+            //Debug.Log("Has path: " + bobbyAI.hasPath);
+
             if (!bobbyAI.pathPending && (bobbyAI.reachedEndOfPath || !bobbyAI.hasPath)) {
-                Debug.Log("Cannot see player");
+                //Debug.Log("Cannot see player");
                 bobbyAI.destination = PickRandomPoint();
                 //bobbyAI.maxSpeed = 1.5f;
                 bobbyAI.SearchPath();
                 enemyAnimator.SetBool("canSeePlayer", false);
             }
         }
-
+        //if we run into a wall, piack another destination
+        if (CanSeeWall(viewDist)) {
+            Debug.Log("Bobby saw a wall");
+            bobbyAI.destination = PickRandomPoint();
+            bobbyAI.SearchPath();
+        }
         //Debug.Log("AIobject found? " + bobbyAI.name);
         //Debug.Log("Player object found? " + playerT.name);
 
@@ -61,7 +70,7 @@ public class EnemyGFX : MonoBehaviour
         else if (bobbyAI.desiredVelocity.x < 0f && isFacingRight) {
             Flip();
         }
-        Debug.Log("Bobby is heading to: " + bobbyAI.destination);
+        //Debug.Log("Bobby is heading to: " + bobbyAI.destination);
 
     }
 
@@ -76,7 +85,7 @@ public class EnemyGFX : MonoBehaviour
         Vector2 endPos = castPoint.position + Vector3.right * viewDist;
         //Debug.Log("end point val: " + endPos);
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Action"));
-        Debug.Log("Ray is hitting: "+hit.collider);
+        //Debug.Log("Ray is hitting: "+hit.collider);
         //check if found player
         Debug.DrawLine(castPoint.position, endPos, Color.blue);
         if (hit.collider != null) {
@@ -88,9 +97,29 @@ public class EnemyGFX : MonoBehaviour
         return false;
     }
 
+    bool CanSeeWall(float viewDist) {
+        //Debug.Log("Checking for wall");
+        if (!isFacingRight) {
+            viewDist = -viewDist;
+        }
+        Vector2 endPos = castPoint.position + Vector3.right * (viewDist/2);
+        //Debug.Log("end point val: " + endPos);
+        RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Action"));
+        //Debug.Log("Ray is hitting: "+hit.collider);
+        //check if found wall
+        Debug.DrawLine(castPoint.position, endPos, Color.red);
+        if (hit.collider != null) {
+            if (hit.collider.gameObject.CompareTag("Walls")) {
+                //Can see a wall
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     Vector3 PickRandomPoint() {
-        Debug.Log("Picking random point");
+        //Debug.Log("Picking random point");
         Vector3 point = Random.insideUnitSphere * radius;
         point.y = 0;
         point += bobbyAI.position;
