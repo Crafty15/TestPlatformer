@@ -18,7 +18,8 @@ public class EnemyGFX : MonoBehaviour
     public void Awake() {
         lScale = transform.localScale;
         playerT = GameObject.Find("Player");
-
+        //try setting the AI destination to something arbitrary on start up 
+        bobbyAI.destination = playerT.transform.position;
     }
 
     // Update is called once per frame
@@ -26,6 +27,7 @@ public class EnemyGFX : MonoBehaviour
     {
         //pick between chasing the player and wandering
         if (CanSeePlayer(viewDist)) {
+            Debug.Log("Can see player");
             //set player as target
             bobbyAI.destination = playerT.transform.position;
             //bobbyAI.maxSpeed = 4f;
@@ -37,6 +39,7 @@ public class EnemyGFX : MonoBehaviour
             //set to wander
             //If AI is not already calculating a path and has reached end of path or has no path at all
             if (!bobbyAI.pathPending && (bobbyAI.reachedEndOfPath || !bobbyAI.hasPath)) {
+                Debug.Log("Cannot see player");
                 bobbyAI.destination = PickRandomPoint();
                 //bobbyAI.maxSpeed = 1.5f;
                 bobbyAI.SearchPath();
@@ -58,7 +61,7 @@ public class EnemyGFX : MonoBehaviour
         else if (bobbyAI.desiredVelocity.x < 0f && isFacingRight) {
             Flip();
         }
-        
+        Debug.Log("Bobby is heading to: " + bobbyAI.destination);
 
     }
 
@@ -87,6 +90,7 @@ public class EnemyGFX : MonoBehaviour
 
 
     Vector3 PickRandomPoint() {
+        Debug.Log("Picking random point");
         Vector3 point = Random.insideUnitSphere * radius;
         point.y = 0;
         point += bobbyAI.position;
