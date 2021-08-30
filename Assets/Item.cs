@@ -12,6 +12,9 @@ public class Item : MonoBehaviour
     public string descriptionText;
     public Sprite image;
 
+/*    private void Awake() {
+        DontDestroyOnLoad(this);
+    }*/
     private void Reset() {
         GetComponent<Collider2D>().isTrigger = true;
         gameObject.layer = 7;

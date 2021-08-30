@@ -21,6 +21,7 @@ public class InteractionSystem : MonoBehaviour
     void Start() {
         //examineWindow.SetActive(false);
     }
+
     void Update(){
         if (DetectObject()) {
             if (InteractInput()) {
@@ -81,6 +82,17 @@ public class InteractionSystem : MonoBehaviour
             //enable boolean
             isExamining = true;
         }
+    }
+
+    //save the player data
+    public void SavePlayerData() {
+        Debug.Log("Saving picked up items");
+        if (pickedItems.Count > 0) {
+            for (int i = 0; i < pickedItems.Count; i++) {
+                Debug.Log("Picked Items" + pickedItems[i].name);
+            }
+        }
+        GlobalController.Instance.setPickedItems(pickedItems);
     }
 
 }

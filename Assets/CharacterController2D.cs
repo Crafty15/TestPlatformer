@@ -141,7 +141,7 @@ public class CharacterController2D : MonoBehaviour {
                 //Debug.Log("canWallGrab && !grounded");
                 if ((transform.localScale.x >= 1f && Input.GetAxisRaw("Horizontal") > 0) || (transform.localScale.x <= -1f && Input.GetAxisRaw("Horizontal") < 0)) {
                     m_isWallGrab = true;
-                    Debug.Log("wallGrabbing");
+                    //Debug.Log("wallGrabbing");
                 }
             }
             //what happens when we are wall grabbing?
