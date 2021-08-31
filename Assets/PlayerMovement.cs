@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     bool crouch = false;
     bool grounded = true;
     bool wallGrab = false;
+    //Sound stuff
+    private AudioSource audio;
 
     // Start is called before the first frame update
     void Start(){

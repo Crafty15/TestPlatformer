@@ -38,36 +38,41 @@ public class GlobalController : MonoBehaviour
     //Prototype uses hard coded messages. Once i can achieve object persistence accross 
     //level specific articles read from json/yaml file?
     public static Article GenerateArticle(int numItems) {
-        Article nA = new Article();
+        Article news = new Article();
         switch (numItems) {
             case 1:
-                nA.setHeadine("Fight between citizens over stolen items");
-                nA.setContent("A neighborhood dispute has made the headlines accross the city after " +
+                news.setHeadine("Fight between citizens over stolen items");
+                news.setContent("A neighborhood dispute has made the headlines across the city after " +
                     "another day of extremely slow news. The local constable declined to comment, stating " +
                     "that he doesn't care for the tabloids as reading is for dandies. More to come....");
                 break;
             case 2:
-                nA.setHeadine("Citizens mildly inconvenienced!");
-                nA.setContent("The citizens of the city were left mildy disgruntled after a spate of thefts " +
+                news.setHeadine("Citizens mildly inconvenienced!");
+                news.setContent("The citizens of the city were left mildy disgruntled several thefts " +
                     "were reported overnight. When asked for comment, a local constable investigating the " +
                     "incidents said that it wasn't him. More to come....");
                 break;
             case 3:
-                nA.setHeadine("");
-                nA.setContent("");
+                news.setHeadine("City is crawling with theives and hooligans!");
+                news.setContent("A spate of city wide thefts and disturbances has left citizens and police on high alert. " +
+                    "A local constable investigating the incident released a press briefing said that if his " +
+                    "lunch is missing he will be right miffed. More to come....");
                 break;
             case 4:
-                nA.setHeadine("");
-                nA.setContent("");
+                news.setHeadine("Ol Springheel terrorizes the streets!");
+                news.setContent("The city is in a state of panic as police hunt for a hooded figure who has accosted " +
+                    "several citizens and left police baffled. Reports of the figures super human abilites have some rumours " +
+                    "spreading that this is some kind of supernatural entity. When asked for comment, a local constable investigating the " +
+                    "incident stated \"Crafty bugger stole me lunch, innit?\". More to come.... ");
                 break;
             default:
-                nA.setHeadine("Man wearing bed linens seen leaving sewer");
-                nA.setContent("Citizens witnessed a man wrapped in a soiled bedsheet leaving " +
+                news.setHeadine("Man wearing bed linens seen leaving sewer");
+                news.setContent("Citizens witnessed a man wrapped in a soiled bedsheet leaving " +
                     "the sewer today. When asked for comment, the local police department claim it " +
-                    "was probably due to the recent Indian food festival. More to come...");
+                    "was probably due to the recent curry festival. More to come...");
                 break;
         }
-        return nA;
+        return news;
     }
 
     public void setPickedItems(List<GameObject> l) {
