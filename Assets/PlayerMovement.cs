@@ -15,11 +15,11 @@ public class PlayerMovement : MonoBehaviour
     bool grounded = true;
     bool wallGrab = false;
     //Sound stuff
-    private AudioSource audio;
+    //private AudioSource audio;
 
     // Start is called before the first frame update
     void Start(){
-
+        //audio = FindObjectOfType<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
         if (CanMove()) {
             //use update to get input from player
             hMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+/*            if (hMove > Mathf.Abs(0.1f) && grounded) {
+                audio.Play();
+            }*/
             //give the animator the run speed
             animator.SetFloat("playerSpeed", Mathf.Abs(hMove));
             if (Input.GetButtonDown("Jump")) {

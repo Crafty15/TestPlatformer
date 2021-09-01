@@ -13,25 +13,17 @@ public class DisplayGameStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        StolenItems = GlobalController.Instance.getPickedItems();
-        Debug.Log("Stolen items 0 = " + StolenItems[0].ToString());
-        Debug.Log("List size is: " + StolenItems.Count);
-        levelNews = GlobalController.GenerateArticle(StolenItems.Count);
-        // Article art = GlobalController.Instance.Ge
+        StolenItems = GlobalController.Instance.GetPickedItems();
+        if (StolenItems.Count > 0) {
+            levelNews = GlobalController.GenerateArticle(StolenItems.Count);
+        }
+        else {
+            levelNews = GlobalController.GenerateArticle(0);
+        }
 
-
-        headLine.text = levelNews.getHeadLine();
-        articleText.text = levelNews.getContent(); ;
+        headLine.text = levelNews.GetHeadLine();
+        articleText.text = levelNews.GetContent(); ;
 
     }
 
-
-    // Update is called once per frame
-/*    void Update()
-    {
-        
-        
-
-    }*/
 }

@@ -92,7 +92,7 @@ public class InteractionSystem : MonoBehaviour
                 Debug.Log("Picked Items" + pickedItems[i].name);
             }
         }
-        GlobalController.Instance.setPickedItems(pickedItems);
+        GlobalController.Instance.SetPickedItems(pickedItems);
     }
 
 }
