@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//NOTE: No longer used. Replaced with cinemachine
 public class cameraFollow : MonoBehaviour{
     public GameObject followObject;         //the object that the camera follows
     public Vector2 followOffset;            //the area of screen that the object can move before cam follows

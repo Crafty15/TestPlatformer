@@ -18,6 +18,7 @@ public class EndLevel : MonoBehaviour
             SceneManager.LoadScene("EndLevel");
             
         }
+        //Use in later iterations
 /*        switch (sceneName) {
             case "Level1":
                 SceneManager.LoadScene("EndLevel");

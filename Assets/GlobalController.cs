@@ -74,8 +74,8 @@ public class GlobalController : MonoBehaviour
         return news;
     }
 
-    public void SetPickedItems(List<GameObject> l) {
-        pickedItems = l;
+    public void SetPickedItems(List<GameObject> items) {
+        pickedItems = items;
     }
 
     public List<GameObject> GetPickedItems() {
