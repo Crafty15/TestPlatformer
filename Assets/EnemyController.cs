@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
     {
         //pick between chasing the player and wandering
         if (CanSeePlayer(viewDist)) {
-            //Debug.Log("Can see player");
+            Debug.Log("Can see player");
             //set player as target
             bobbyAI.destination = playerT.transform.position;
             //bobbyAI.maxSpeed = 4f;
@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
             enemyAnimator.SetBool("canSeePlayer", true);
         }
         else {
-            //Debug.Log("Cant see player");
+            Debug.Log("Cant see player");
             //set to wander
             //If AI is not already calculating a path and has reached end of path or has no path at all
             //Debug.Log("Path pending: " + bobbyAI.pathPending);
@@ -61,6 +61,7 @@ public class EnemyController : MonoBehaviour
 
         //give the animator the ai speed
         enemyAnimator.SetFloat("enemySpeed", Mathf.Abs(bobbyAI.desiredVelocity.x));
+        Debug.Log("Bobby speed: " + Mathf.Abs(bobbyAI.desiredVelocity.x));
         //is moving right
         if (bobbyAI.desiredVelocity.x > 0f && !isFacingRight) {
             /*lScale.x *=*/
@@ -75,7 +76,7 @@ public class EnemyController : MonoBehaviour
     }
 
     bool CanSeePlayer(float viewDist) {
-        //Debug.Log("Checking for player");
+        Debug.Log("Checking for player");
         //Debug.Log("Cast point val: " + castPoint.position);
 
         //Debug.DrawLine();
@@ -104,7 +105,7 @@ public class EnemyController : MonoBehaviour
         }
         Vector2 endPos = castPoint.position + Vector3.right * (viewDist/2);
         //Debug.Log("end point val: " + endPos);
-        RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Action"));
+        RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Walls"));
         //Debug.Log("Ray is hitting: "+hit.collider);
         //check if found wall
         Debug.DrawLine(castPoint.position, endPos, Color.red);
