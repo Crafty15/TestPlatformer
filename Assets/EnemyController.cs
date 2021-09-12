@@ -11,15 +11,22 @@ public class EnemyController : MonoBehaviour
     public float radius = 20f;
     private GameObject playerT;
     public float viewDist = 10f;
+    public GameObject enemySpeech;
+    private float speechTimer = 0.0f;
+    public bool canArrest;
+    Vector3 speechScale;
+    //private bool isTalking = false;
     //Point for start of enemies line of sight
     [SerializeField] private Transform castPoint;
 /*    private Rigidbody2D enemyRB;*/
 
     public void Awake() {
         lScale = transform.localScale;
+        speechScale = enemySpeech.transform.localScale;
         playerT = GameObject.Find("Player");
         //try setting the AI destination to something arbitrary on start up 
         bobbyAI.destination = playerT.transform.position;
+        
     }
 
     // Update is called once per frame
@@ -30,27 +37,34 @@ public class EnemyController : MonoBehaviour
             Debug.Log("Can see player");
             //set player as target
             bobbyAI.destination = playerT.transform.position;
+            bobbyAI.maxSpeed = 4.5f;
             //bobbyAI.maxSpeed = 4f;
             //Debug.Log("Can see player");
+            //enemySpeech.SetActive(true);
+            //reset speech timer
+            speechTimer = 5.0f;
             enemyAnimator.SetBool("canSeePlayer", true);
+            //makes bobby shout
+            speechTimer = 2.0f;
         }
         else {
             Debug.Log("Cant see player");
             //set to wander
             //If AI is not already calculating a path and has reached end of path or has no path at all
-            //Debug.Log("Path pending: " + bobbyAI.pathPending);
-            //Debug.Log("Reached end of path: " + bobbyAI.reachedEndOfPath);
-            //Debug.Log("Has path: " + bobbyAI.hasPath);
-
+            Debug.Log("Path pending: " + bobbyAI.pathPending);
+            Debug.Log("Reached end of path: " + bobbyAI.reachedEndOfPath);
+            Debug.Log("Has path: " + bobbyAI.hasPath);
             if (!bobbyAI.pathPending && (bobbyAI.reachedEndOfPath || !bobbyAI.hasPath)) {
-                //Debug.Log("Cannot see player");
+                Debug.Log("Setting to wander");
+                bobbyAI.maxSpeed = 2.0f;
                 bobbyAI.destination = PickRandomPoint();
                 //bobbyAI.maxSpeed = 1.5f;
                 bobbyAI.SearchPath();
                 enemyAnimator.SetBool("canSeePlayer", false);
             }
         }
-        //if we run into a wall, piack another destination
+        //if we run into a wall, pick another destination
+        //NOTE: Probably set a point somewhere behind the sprite to stop it getting stuck
         if (CanSeeWall(viewDist)) {
             Debug.Log("Bobby saw a wall");
             bobbyAI.destination = PickRandomPoint();
@@ -60,8 +74,8 @@ public class EnemyController : MonoBehaviour
         //Debug.Log("Player object found? " + playerT.name);
 
         //give the animator the ai speed
-        enemyAnimator.SetFloat("enemySpeed", Mathf.Abs(bobbyAI.desiredVelocity.x));
-        Debug.Log("Bobby speed: " + Mathf.Abs(bobbyAI.desiredVelocity.x));
+        enemyAnimator.SetFloat("enemySpeed", Mathf.Abs(bobbyAI.velocity.x));
+        Debug.Log("Bobby speed: " + Mathf.Abs(bobbyAI.velocity.x));
         //is moving right
         if (bobbyAI.desiredVelocity.x > 0f && !isFacingRight) {
             /*lScale.x *=*/
@@ -73,6 +87,15 @@ public class EnemyController : MonoBehaviour
         }
         //Debug.Log("Bobby is heading to: " + bobbyAI.destination);
 
+        //Handle bobby speech
+        if (speechTimer > 0) {
+            enemySpeech.SetActive(true);
+            speechTimer -= Time.deltaTime;
+        }
+        else {
+            enemySpeech.SetActive(false);
+        }
+        
     }
 
     bool CanSeePlayer(float viewDist) {
@@ -131,8 +154,11 @@ public class EnemyController : MonoBehaviour
         isFacingRight = !isFacingRight;
         // Multiply the player's x local scale by -1.
         lScale.x *= -1;
+        speechScale.x *= -1;
         transform.localScale = lScale;
+        enemySpeech.transform.localScale = speechScale;
     }
+
 
 
 }
