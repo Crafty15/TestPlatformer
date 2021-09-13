@@ -15,11 +15,11 @@ public class PlayerMovement : MonoBehaviour
     bool grounded = true;
     bool wallGrab = false;
     //Sound stuff
-    //private AudioSource audio;
+    [SerializeField]public AudioSource[] sounds;
 
     // Start is called before the first frame update
     void Start(){
-        //audio = FindObjectOfType<AudioSource>();
+        sounds = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -83,5 +83,16 @@ public class PlayerMovement : MonoBehaviour
             canMove = false;
         }
         return canMove;
+    }
+
+    //Sounds related
+    private void FootStep() {
+        sounds[0].Play();
+    }
+    private void Jump() {
+        sounds[1].Play();
+    }
+    private void CrouchWalk() {
+        sounds[2].Play();
     }
 }
