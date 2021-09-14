@@ -17,15 +17,23 @@ public class InteractionSystem : MonoBehaviour
     public bool isExamining = false;
     [Header("Others")]
     public List<GameObject> pickedItems = new List<GameObject>(); //Picked up item list
+    public PlayerMovement playerControl;
 
     void Start() {
         //examineWindow.SetActive(false);
+        playerControl = FindObjectOfType<PlayerMovement>();
     }
 
     void Update(){
         if (DetectObject()) {
-            if (InteractInput()) {
+            if (Input.GetKeyDown(KeyCode.E)) {
                 detectedObject.GetComponent<Item>().Interact();
+            }
+            if (Input.GetKey(KeyCode.S)) {
+                HideBehindObject(true);
+            }
+            else {
+                HideBehindObject(false);
             }
         }
         else if (examineWindow.activeSelf) {
@@ -36,10 +44,10 @@ public class InteractionSystem : MonoBehaviour
         }
     }
 
-    bool InteractInput() {
+/*    bool InteractInput() {
         return Input.GetKeyDown(KeyCode.E);
     }
-
+*/
     bool DetectObject() {
         
         Collider2D obj = Physics2D.OverlapCircle(detectionPoint.position, detectionRadius, detectionLayer);
@@ -82,6 +90,19 @@ public class InteractionSystem : MonoBehaviour
             //enable boolean
             isExamining = true;
         }
+    }
+
+    // hide behind an object
+    public void HideBehindObject(bool setHide) {
+        Debug.Log("Hide: " + setHide);
+        if (setHide) {
+            playerControl.Hide();
+            //Do other stuff? Possibly apply a vingette or something
+        }
+        else {
+            playerControl.Unhide();
+        }
+
     }
 
     //save the player data

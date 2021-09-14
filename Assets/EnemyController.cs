@@ -11,11 +11,13 @@ public class EnemyController : MonoBehaviour
     public float radius = 20f;
     private GameObject playerT;
     public float viewDist = 10f;
+    //Speech-indicator related stuff
     public GameObject enemySpeech;
     private float speechTimer = 0.0f;
-    public bool canArrest;
     Vector3 speechScale;
-    //private bool isTalking = false;
+    //
+    public bool canArrest;
+
     //Point for start of enemies line of sight
     [SerializeField] private Transform castPoint;
 /*    private Rigidbody2D enemyRB;*/
@@ -34,28 +36,25 @@ public class EnemyController : MonoBehaviour
     {
         //pick between chasing the player and wandering
         if (CanSeePlayer(viewDist)) {
-            Debug.Log("Can see player");
+            //Debug.Log("Can see player");
             //set player as target
             bobbyAI.destination = playerT.transform.position;
             bobbyAI.maxSpeed = 4.5f;
             //bobbyAI.maxSpeed = 4f;
             //Debug.Log("Can see player");
-            //enemySpeech.SetActive(true);
-            //reset speech timer
-            speechTimer = 5.0f;
             enemyAnimator.SetBool("canSeePlayer", true);
             //makes bobby shout
             speechTimer = 2.0f;
         }
         else {
-            Debug.Log("Cant see player");
+            //Debug.Log("Cant see player");
             //set to wander
             //If AI is not already calculating a path and has reached end of path or has no path at all
-            Debug.Log("Path pending: " + bobbyAI.pathPending);
-            Debug.Log("Reached end of path: " + bobbyAI.reachedEndOfPath);
-            Debug.Log("Has path: " + bobbyAI.hasPath);
+            //Debug.Log("Path pending: " + bobbyAI.pathPending);
+            //Debug.Log("Reached end of path: " + bobbyAI.reachedEndOfPath);
+            //Debug.Log("Has path: " + bobbyAI.hasPath);
             if (!bobbyAI.pathPending && (bobbyAI.reachedEndOfPath || !bobbyAI.hasPath)) {
-                Debug.Log("Setting to wander");
+                //Debug.Log("Setting to wander");
                 bobbyAI.maxSpeed = 2.0f;
                 bobbyAI.destination = PickRandomPoint();
                 //bobbyAI.maxSpeed = 1.5f;
@@ -66,7 +65,7 @@ public class EnemyController : MonoBehaviour
         //if we run into a wall, pick another destination
         //NOTE: Probably set a point somewhere behind the sprite to stop it getting stuck
         if (CanSeeWall(viewDist)) {
-            Debug.Log("Bobby saw a wall");
+            //Debug.Log("Bobby saw a wall");
             bobbyAI.destination = PickRandomPoint();
             bobbyAI.SearchPath();
         }
@@ -75,7 +74,7 @@ public class EnemyController : MonoBehaviour
 
         //give the animator the ai speed
         enemyAnimator.SetFloat("enemySpeed", Mathf.Abs(bobbyAI.velocity.x));
-        Debug.Log("Bobby speed: " + Mathf.Abs(bobbyAI.velocity.x));
+        //Debug.Log("Bobby speed: " + Mathf.Abs(bobbyAI.velocity.x));
         //is moving right
         if (bobbyAI.desiredVelocity.x > 0f && !isFacingRight) {
             /*lScale.x *=*/
@@ -99,7 +98,7 @@ public class EnemyController : MonoBehaviour
     }
 
     bool CanSeePlayer(float viewDist) {
-        Debug.Log("Checking for player");
+        //Debug.Log("Checking for player");
         //Debug.Log("Cast point val: " + castPoint.position);
 
         //Debug.DrawLine();

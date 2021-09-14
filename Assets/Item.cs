@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 { 
-    public enum InteractionType { NONE, PickUp, Examine};       //Interaction types
+    public enum InteractionType { NONE, PickUp, Examine, Hide};       //Interaction types
     public InteractionType type;                                //Class interaction type
     [Header("Examine")]
     public string descriptionText;
@@ -35,9 +35,18 @@ public class Item : MonoBehaviour
                 FindObjectOfType<InteractionSystem>().ExamineItem(this);
                 Debug.Log("Examine");
                 break;
+/*            case InteractionType.Hide:
+                //
+                FindObjectOfType<InteractionSystem>().HideBehindObject();
+                Debug.Log("Hide?");
+                break;*/
             default:
                 Debug.Log("Null item");
                 break;
         }
     }
+    //hide
+/*    public void HideBehind() {
+
+    }*/
 }

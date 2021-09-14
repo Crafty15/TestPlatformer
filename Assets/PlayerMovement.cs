@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
     public void OnLanding() {
         animator.SetBool("isJumping", false);
     }
@@ -62,6 +63,13 @@ public class PlayerMovement : MonoBehaviour
     }
     public bool canStand() {
         return controller.checkCanStand();
+    }
+
+    public void Hide() {
+        gameObject.layer = 0; 
+    }
+    public void Unhide() {
+        gameObject.layer = 10;
     }
 
     //NOTE: Check which controls can be moved into CharacterController
@@ -95,4 +103,6 @@ public class PlayerMovement : MonoBehaviour
     private void CrouchWalk() {
         sounds[2].Play();
     }
+
+
 }
