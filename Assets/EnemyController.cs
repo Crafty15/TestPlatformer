@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     Vector3 speechScale;
     //
     public bool isCop;
+    public float attackDist;
 
     //Point for start of enemies line of sight
     [SerializeField] private Transform castPoint;
@@ -47,6 +48,7 @@ public class EnemyController : MonoBehaviour
             speechTimer = 2.0f;
         }
         else {
+            Attack(false);
             //Debug.Log("Cant see player");
             //set to wander
             //If AI is not already calculating a path and has reached end of path or has no path at all
@@ -108,14 +110,20 @@ public class EnemyController : MonoBehaviour
         Vector2 endPos = castPoint.position + Vector3.right * viewDist;
         //Debug.Log("end point val: " + endPos);
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Action"));
-        //Debug.Log("Ray is hitting: "+hit.collider);
+        
         //check if found player
         Debug.DrawLine(castPoint.position, endPos, Color.blue);
         if (hit.collider != null) {
+            Debug.Log("Ray is hitting: " + hit.collider.gameObject.tag);
             if (hit.collider.gameObject.CompareTag("Player")) {
+                //if close to player, pause movement & trigger attack
+                if (hit.distance < attackDist) {
+                    Attack(true);
+                }
                 //chase the player
                 return true;
             }
+            
         }
         return false;
     }
@@ -158,6 +166,16 @@ public class EnemyController : MonoBehaviour
         enemySpeech.transform.localScale = speechScale;
     }
 
+
+
+    private void Attack(bool state) {
+        Debug.Log("Attack");
+        if (state) {
+            enemyAI.maxSpeed = 0;
+        }
+        //
+        enemyAnimator.SetBool("attack", state);
+    }
 
 
 }
