@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     //Sound stuff
     [SerializeField]public AudioSource[] sounds;
 
+
     // Start is called before the first frame update
     void Start(){
         sounds = GetComponents<AudioSource>();
@@ -103,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
     private void CrouchWalk() {
         sounds[2].Play();
     }
+
+
 
 
 }

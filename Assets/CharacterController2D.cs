@@ -32,14 +32,16 @@ public class CharacterController2D : MonoBehaviour {
 
 	[Header("Events")]
 	[Space]
-
 	public UnityEvent OnLandEvent;
-
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
-
 	public BoolEvent OnCrouchEvent;
 	private bool m_wasCrouching = false;
+
+	//Damage
+	int health = 3;
+	float knockBackTimer;
+	float knockBackForce = 10f;
 
 	private void Awake() {
 		m_JumpForce = 1000f;
@@ -192,39 +194,20 @@ public class CharacterController2D : MonoBehaviour {
 	public bool checkCanStand() {
 		return canStand;
     }
+	//
+	public void KnockBack() {
+		Vector2 kbVec = new Vector2(-knockBackForce, knockBackForce);
+		m_Rigidbody2D.velocity = kbVec;
+	}
 
+	//damage
+	public void TakeDamage() {
+		health--;
+	}
 
-/*    public void WallJump(float hMoveSpeed) {
-        //****Wall Jump stuff *****
-        m_isWallGrab = false;
-        m_canWallGrab = Physics2D.OverlapCircle(wallGrabPoint.position, wallGrabRadius, whatIsWall);
-        //check if against wall - if facing right and pushing right OR facing left and pushing left
-        if (m_canWallGrab && !m_Grounded) {
-            Debug.Log("canWallGrab && !grounded");
-            if ((transform.localScale.x >= 1f && Input.GetAxisRaw("Horizontal") > 0) || (transform.localScale.x <= -1f && Input.GetAxisRaw("Horizontal") < 0)) {
-                m_isWallGrab = true;
-                *//*Debug.Log("wallGrabbing");
-			}
-		}
-		//what happens when we are wall grabbing?
-		if (m_isWallGrab) {
-			m_Rigidbody2D.gravityScale = 0f;
-			m_Rigidbody2D.velocity = Vector2.zero;
-			Debug.Log("IsWallGrab");
+	public void AddHealth() {
+		health++;
+	}
 
-			//wall jump
-			if (Input.GetButtonDown("Jump")) {
-				wallJumpCounter = m_wallJumpTime;
-				Debug.Log("IsWallGrab AND JUMP");
-				/*m_Rigidbody2D.velocity = new Vector2( -Input.GetAxisRaw("Horizontal") * move, m_JumpForce);*//*
-                m_Rigidbody2D.AddForce(new Vector2(-Input.GetAxisRaw("Horizontal") * hMoveSpeed, m_JumpForce));
-				m_Rigidbody2D.gravityScale = gravStore;
-				m_isWallGrab = false;
-			}
-		}
-		else {
-			m_Rigidbody2D.gravityScale = gravStore;
-		}
-	}*/
 
 }

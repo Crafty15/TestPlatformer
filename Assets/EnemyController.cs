@@ -18,6 +18,8 @@ public class EnemyController : MonoBehaviour
     //
     public bool isCop;
     public float attackDist;
+    //Player
+    public GameObject playerObject;
 
     //Point for start of enemies line of sight
     [SerializeField] private Transform castPoint;
@@ -29,7 +31,7 @@ public class EnemyController : MonoBehaviour
         playerT = GameObject.Find("Player");
         //try setting the AI destination to something arbitrary on start up 
         enemyAI.destination = playerT.transform.position;
-        
+        //playerMovement = GameObject.Find
     }
 
     // Update is called once per frame
@@ -170,12 +172,15 @@ public class EnemyController : MonoBehaviour
 
     private void Attack(bool state) {
         Debug.Log("Attack");
+        //Actually attack
         if (state) {
             enemyAI.maxSpeed = 0;
+            //
+            playerObject.GetComponent<CharacterController2D>().KnockBack();         
         }
-        //
         enemyAnimator.SetBool("attack", state);
     }
+
 
 
 }
