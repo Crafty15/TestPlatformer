@@ -194,9 +194,10 @@ public class CharacterController2D : MonoBehaviour {
 	public bool checkCanStand() {
 		return canStand;
     }
-	//
-	public void KnockBack() {
-		Vector2 kbVec = new Vector2(-knockBackForce, knockBackForce);
+	//param takes the enemy local scale x value to allow knocking in the direction enemy is facing
+	public void KnockBack(float enemyLocalScaleX) {
+		//10 is a bit of a magic number :/
+		Vector2 kbVec = new Vector2((enemyLocalScaleX * knockBackForce) * 10, knockBackForce);
 		m_Rigidbody2D.velocity = kbVec;
 	}
 

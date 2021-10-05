@@ -18,6 +18,8 @@ public class EnemyController : MonoBehaviour
     //
     public bool isCop;
     public float attackDist;
+    public float attackDuration;
+    float attackTime = 0.00f;
     //Player
     public GameObject playerObject;
 
@@ -37,68 +39,74 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //pick between chasing the player and wandering
-        if (CanSeePlayer(viewDist)) {
-            //Debug.Log("Can see player");
-            //set player as target
-            enemyAI.destination = playerT.transform.position;
-            enemyAI.maxSpeed = 4.5f;
-            //enemyAI.maxSpeed = 4f;
-            //Debug.Log("Can see player");
-            enemyAnimator.SetBool("canSeePlayer", true);
-            //makes bobby shout
-            speechTimer = 2.0f;
-        }
-        else {
-            Attack(false);
-            //Debug.Log("Cant see player");
-            //set to wander
-            //If AI is not already calculating a path and has reached end of path or has no path at all
-            Debug.Log("Path pending: " + enemyAI.pathPending);
-            Debug.Log("Reached end of path: " + enemyAI.reachedEndOfPath);
-            Debug.Log("Has path: " + enemyAI.hasPath);
-            if (!enemyAI.pathPending && (enemyAI.reachedEndOfPath || !enemyAI.hasPath)) {
-                Debug.Log("Setting to wander");
-                enemyAI.maxSpeed = 2.0f;
+        if (attackTime <= attackDuration) {
+            //pick between chasing the player and wandering
+            if (CanSeePlayer(viewDist)) {
+                //Debug.Log("Can see player");
+                //set player as target
+                enemyAI.destination = playerT.transform.position;
+                enemyAI.maxSpeed = 4.5f;
+                //enemyAI.maxSpeed = 4f;
+                //Debug.Log("Can see player");
+                enemyAnimator.SetBool("canSeePlayer", true);
+                //makes bobby shout
+                speechTimer = 2.0f;
+            }
+            else {
+                Attack(false);
+                //Debug.Log("Cant see player");
+                //set to wander
+                //If AI is not already calculating a path and has reached end of path or has no path at all
+                Debug.Log("Path pending: " + enemyAI.pathPending);
+                Debug.Log("Reached end of path: " + enemyAI.reachedEndOfPath);
+                Debug.Log("Has path: " + enemyAI.hasPath);
+                if (!enemyAI.pathPending && (enemyAI.reachedEndOfPath || !enemyAI.hasPath)) {
+                    Debug.Log("Setting to wander");
+                    enemyAI.maxSpeed = 2.0f;
+                    enemyAI.destination = PickRandomPoint();
+                    //enemyAI.maxSpeed = 1.5f;
+                    enemyAI.SearchPath();
+                    enemyAnimator.SetBool("canSeePlayer", false);
+                }
+            }
+
+            //if we run into a wall, pick another destination
+            //NOTE: Probably set a point somewhere behind the sprite to stop it getting stuck
+            if (CanSeeWall(viewDist)) {
+                Debug.Log("Enemy saw a wall");
                 enemyAI.destination = PickRandomPoint();
-                //enemyAI.maxSpeed = 1.5f;
                 enemyAI.SearchPath();
-                enemyAnimator.SetBool("canSeePlayer", false);
+            }
+            //Debug.Log("AIobject found? " + bobbyAI.name);
+            //Debug.Log("Player object found? " + playerT.name);
+
+            //give the animator the ai speed
+            enemyAnimator.SetFloat("enemySpeed", Mathf.Abs(enemyAI.velocity.x));
+            //Debug.Log("Bobby speed: " + Mathf.Abs(bobbyAI.velocity.x));
+            //is moving right
+            if (enemyAI.desiredVelocity.x > 0f && !isFacingRight) {
+                /*lScale.x *=*/
+                Flip();
+            }
+            //moving left
+            else if (enemyAI.desiredVelocity.x < 0f && isFacingRight) {
+                Flip();
+            }
+            //Debug.Log("Bobby is heading to: " + bobbyAI.destination);
+
+            //Handle bobby speech
+            if (speechTimer > 0) {
+                enemySpeech.SetActive(true);
+                speechTimer -= Time.deltaTime;
+            }
+            else {
+                enemySpeech.SetActive(false);
             }
         }
-        //if we run into a wall, pick another destination
-        //NOTE: Probably set a point somewhere behind the sprite to stop it getting stuck
-        if (CanSeeWall(viewDist)) {
-            Debug.Log("Enemy saw a wall");
-            enemyAI.destination = PickRandomPoint();
-            enemyAI.SearchPath();
-        }
-        //Debug.Log("AIobject found? " + bobbyAI.name);
-        //Debug.Log("Player object found? " + playerT.name);
-
-        //give the animator the ai speed
-        enemyAnimator.SetFloat("enemySpeed", Mathf.Abs(enemyAI.velocity.x));
-        //Debug.Log("Bobby speed: " + Mathf.Abs(bobbyAI.velocity.x));
-        //is moving right
-        if (enemyAI.desiredVelocity.x > 0f && !isFacingRight) {
-            /*lScale.x *=*/
-            Flip();
-        }
-        //moving left
-        else if (enemyAI.desiredVelocity.x < 0f && isFacingRight) {
-            Flip();
-        }
-        //Debug.Log("Bobby is heading to: " + bobbyAI.destination);
-
-        //Handle bobby speech
-        if (speechTimer > 0) {
-            enemySpeech.SetActive(true);
-            speechTimer -= Time.deltaTime;
-        }
         else {
-            enemySpeech.SetActive(false);
+            attackTime -= Time.deltaTime;
         }
-        
+
     }
 
     bool CanSeePlayer(float viewDist) {
@@ -121,6 +129,7 @@ public class EnemyController : MonoBehaviour
                 //if close to player, pause movement & trigger attack
                 if (hit.distance < attackDist) {
                     Attack(true);
+                    attackTime = 2.0f;
                 }
                 //chase the player
                 return true;
@@ -173,12 +182,13 @@ public class EnemyController : MonoBehaviour
     private void Attack(bool state) {
         Debug.Log("Attack");
         //Actually attack
+        enemyAnimator.SetBool("attack", state);
         if (state) {
             enemyAI.maxSpeed = 0;
             //
-            playerObject.GetComponent<CharacterController2D>().KnockBack();         
+            playerObject.GetComponent<CharacterController2D>().KnockBack(transform.localScale.x);         
         }
-        enemyAnimator.SetBool("attack", state);
+        
     }
 
 
