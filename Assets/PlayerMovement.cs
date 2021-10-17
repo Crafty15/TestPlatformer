@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
     public Animator animator;
-    private Rigidbody2D playerRB;
+    public Rigidbody2D playerRB;
     public float runSpeed = 40f;
     public float walkSpeed = 10f;
     float hMove = 0f;       //horizontal movement
@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
     bool wallGrab = false;
     //Sound stuff
     [SerializeField]public AudioSource[] sounds;
+    //rope
+    public bool isSwinging = false;
+    public Vector2 ropeHook;
+    public float swingForce = 5f;
 
 
     // Start is called before the first frame update
@@ -28,12 +32,9 @@ public class PlayerMovement : MonoBehaviour
         if (CanMove()) {
             //use update to get input from player
             hMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-/*            if (hMove > Mathf.Abs(0.1f) && grounded) {
-                audio.Play();
-            }*/
             //give the animator the run speed
             animator.SetFloat("playerSpeed", Mathf.Abs(hMove));
-            if (Input.GetButtonDown("Jump")) {
+            if (Input.GetButtonDown("Jump") && !isSwinging) {
                 jump = true;
                 animator.SetBool("isJumping", true);
             }
@@ -45,6 +46,36 @@ public class PlayerMovement : MonoBehaviour
             }
             CheckGrounded();
             checkWallGrab();
+
+            //do the swinging stuff
+            if (isSwinging) {
+                animator.SetBool("isSwinging", true);
+                // 1 - Get a normalized direction vector from the player to the hook point
+                var playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
+                // 2 - Inverse the direction to get a perpendicular direction
+                Vector2 perpendicularDirection;
+                if (hMove < 0) {
+                    perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
+                    var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
+                    Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
+                }
+                else {
+                    perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
+                    var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
+                    Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
+                }
+
+                var force = perpendicularDirection * swingForce;
+                playerRB.AddForce(force, ForceMode2D.Force);
+            }
+            else {
+                animator.SetBool("isSwinging", false);
+/*                if (grounded) {
+                    var groundForce = speed * 2f;
+                    rBody.AddForce(new Vector2((horizontalInput * groundForce - rBody.velocity.x) * groundForce, 0));
+                    rBody.velocity = new Vector2(rBody.velocity.x, rBody.velocity.y);
+                }*/
+            }
         }
 
     }
@@ -56,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
     public void CheckGrounded() {
         grounded = controller.isGrounded();
         animator.SetBool("isGrounded", grounded);
+       // OnLanding();
     }
 
     public void checkWallGrab() {
@@ -104,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
     private void CrouchWalk() {
         sounds[2].Play();
     }
+
 
 
 

@@ -9,6 +9,7 @@ public class GlobalController : MonoBehaviour
 
     public List<GameObject> pickedItems = new List<GameObject>(); //Picked up item list
 
+    static int level = 0;
 
     private void Awake() {
         //DontDestroyOnLoad(gameObject);
@@ -21,21 +22,11 @@ public class GlobalController : MonoBehaviour
         }
         //Debug.Log("Picked items 0: " + pickedItems[0]);
     }
-    //
-/*    private void Update() {
-        if (pickedItems.Count <= 0) {
-            Debug.Log("List empty");
-        }
-        else {
-            Debug.Log("List size is: "+ pickedItems.Count);
-            Debug.Log("List has item: " + pickedItems[0]);
-        }
-    }*/
-
 
     //Generate an article to display based on the game objects collected
     //Prototype uses hard coded messages. Once i can achieve object persistence accross 
     //level specific articles read from json/yaml file?
+    //NOTE: Nested switches for different levels
     public static Article GenerateArticle(int numItems) {
         Article news = new Article();
         switch (numItems) {
@@ -82,6 +73,14 @@ public class GlobalController : MonoBehaviour
         return pickedItems;
     }
 
+    //track levels complete
+    public static void IncrementLevel() {
+        level++;
+    }
+
+    public static int GetLevel() {
+        return level;
+    }
 
 }
 
@@ -106,6 +105,8 @@ public struct Article {
         return content;
     }
 }
+
+
 
 
 

@@ -14,24 +14,37 @@ public class EndLevel : MonoBehaviour
         Debug.Log("Trigger");
         Debug.Log(sceneName + "Complete");
         player.GetComponent<InteractionSystem>().SavePlayerData();
-        if (sceneName.Equals("Level1")) {
-            SceneManager.LoadScene("EndLevel");
-            
+        //if coming from a level, increment the level counter and load the end level scene
+        if (sceneName.Equals("Level1") || sceneName.Equals("Level2") || sceneName.Equals("Level3")) {
+            GlobalController.IncrementLevel();
+            Debug.Log(GlobalController.GetLevel());
+            SceneManager.LoadScene("EndLevel");        
         }
-        //Use in later iterations
-/*        switch (sceneName) {
-            case "Level1":
-                SceneManager.LoadScene("EndLevel");
-                break;
-            case "EndLevel":
-                SceneManager.LoadScene("MainMenu");
-                break;
+        //if coming from endlevel scene, check level counter and load appropriate level
+/*        else if (sceneName.Equals("EndLevel")) {
+            if (GlobalController.GetLevel() == 1) {
+                SceneManager.LoadScene("Level2");
+            }
+            else if (GlobalController.GetLevel() == 2) {
+                SceneManager.LoadScene("Level3");
+            }
         }*/
-        
+        else {
+            SceneManager.LoadScene("MainMenu");
+        }
+
     }
 
     public void Continue() {
-        SceneManager.LoadScene("MainMenu");
+        if (GlobalController.GetLevel() == 1) {
+            SceneManager.LoadScene("Level2");
+        }
+        else if (GlobalController.GetLevel() == 2) {
+            SceneManager.LoadScene("Level3");
+        }
+        else {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
 }

@@ -18,6 +18,7 @@ public class InteractionSystem : MonoBehaviour
     [Header("Others")]
     public List<GameObject> pickedItems = new List<GameObject>(); //Picked up item list
     public PlayerMovement playerControl;
+    public GameObject sneakEffect;
 
     void Start() {
         //examineWindow.SetActive(false);
@@ -41,13 +42,13 @@ public class InteractionSystem : MonoBehaviour
             examineWindow.SetActive(false);
             //disable boolean
             isExamining = false;
+
+        }
+        else {
+            sneakEffect.SetActive(false);
         }
     }
 
-/*    bool InteractInput() {
-        return Input.GetKeyDown(KeyCode.E);
-    }
-*/
     bool DetectObject() {
         
         Collider2D obj = Physics2D.OverlapCircle(detectionPoint.position, detectionRadius, detectionLayer);
@@ -98,9 +99,11 @@ public class InteractionSystem : MonoBehaviour
         if (setHide) {
             playerControl.Hide();
             //Do other stuff? Possibly apply a vingette or something
+            sneakEffect.SetActive(true);
         }
         else {
             playerControl.Unhide();
+            sneakEffect.SetActive(false);
         }
 
     }

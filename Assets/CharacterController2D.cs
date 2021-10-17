@@ -53,9 +53,11 @@ public class CharacterController2D : MonoBehaviour {
 		if (OnCrouchEvent == null)
 			OnCrouchEvent = new BoolEvent();
 	}
+
     private void Start() {
 		gravStore = m_Rigidbody2D.gravityScale;
     }
+
     private void FixedUpdate() {
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;		
@@ -171,8 +173,6 @@ public class CharacterController2D : MonoBehaviour {
         }
     }
 
-
-
     private void Flip() {
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
@@ -194,6 +194,7 @@ public class CharacterController2D : MonoBehaviour {
 	public bool checkCanStand() {
 		return canStand;
     }
+
 	//param takes the enemy local scale x value to allow knocking in the direction enemy is facing
 	public void KnockBack(float enemyLocalScaleX) {
 		//10 is a bit of a magic number :/
