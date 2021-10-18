@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     //rope
     public bool isSwinging = false;
     public Vector2 ropeHook;
-    public float swingForce = 5f;
+    public float swingForce = 15f;
 
 
     // Start is called before the first frame update
@@ -51,22 +51,36 @@ public class PlayerMovement : MonoBehaviour
             if (isSwinging) {
                 animator.SetBool("isSwinging", true);
                 // 1 - Get a normalized direction vector from the player to the hook point
-                var playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
+                Vector2 playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
                 // 2 - Inverse the direction to get a perpendicular direction
                 Vector2 perpendicularDirection;
                 if (hMove < 0) {
                     perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
+                    //for displaying gizmos
                     var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
                     Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
                 }
-                else {
+                else if(hMove > 0) {
                     perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
+                    //for displaying gizmos
                     var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
                     Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
                 }
+                else {
+                    perpendicularDirection = new Vector2(0, 0);
+                }
 
-                var force = perpendicularDirection * swingForce;
-                playerRB.AddForce(force, ForceMode2D.Force);
+                Vector2 force = perpendicularDirection * swingForce;
+                //DEBUG
+                Debug.Log("hMove: " + hMove);
+                /*Debug.Log("Transform.position x: " + transform.position.x);
+                Debug.Log("Transform.position y: " + transform.position.y);*/
+                Debug.Log("playerToHookDirection: "+playerToHookDirection);
+                Debug.Log("Total swinging force x: "+force.x);
+                Debug.Log("Total swinging force y: " + force.y);
+                Debug.Log("RopeHook x: " + ropeHook.x);
+                Debug.Log("RopeHook y: " + ropeHook.y);
+                playerRB.AddForce(force);
             }
             else {
                 animator.SetBool("isSwinging", false);
