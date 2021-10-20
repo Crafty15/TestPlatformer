@@ -57,11 +57,11 @@ public class EnemyController : MonoBehaviour
                 //Debug.Log("Cant see player");
                 //set to wander
                 //If AI is not already calculating a path and has reached end of path or has no path at all
-                Debug.Log("Path pending: " + enemyAI.pathPending);
+/*                Debug.Log("Path pending: " + enemyAI.pathPending);
                 Debug.Log("Reached end of path: " + enemyAI.reachedEndOfPath);
-                Debug.Log("Has path: " + enemyAI.hasPath);
+                Debug.Log("Has path: " + enemyAI.hasPath);*/
                 if (!enemyAI.pathPending && (enemyAI.reachedEndOfPath || !enemyAI.hasPath)) {
-                    Debug.Log("Setting to wander");
+                    //Debug.Log("Setting to wander");
                     enemyAI.maxSpeed = 2.0f;
                     enemyAI.destination = PickRandomPoint();
                     //enemyAI.maxSpeed = 1.5f;
@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
             //if we run into a wall, pick another destination
             //NOTE: Probably set a point somewhere behind the sprite to stop it getting stuck
             if (CanSeeWall(viewDist)) {
-                Debug.Log("Enemy saw a wall");
+                //Debug.Log("Enemy saw a wall");
                 enemyAI.destination = PickRandomPoint();
                 enemyAI.SearchPath();
             }
@@ -110,7 +110,7 @@ public class EnemyController : MonoBehaviour
     }
 
     bool CanSeePlayer(float viewDist) {
-        Debug.Log("Checking for player");
+        //Debug.Log("Checking for player");
         //Debug.Log("Cast point val: " + castPoint.position);
 
         //Debug.DrawLine();
@@ -124,7 +124,7 @@ public class EnemyController : MonoBehaviour
         //check if found player
         Debug.DrawLine(castPoint.position, endPos, Color.blue);
         if (hit.collider != null) {
-            Debug.Log("Ray is hitting: " + hit.collider.gameObject.tag);
+           // Debug.Log("Ray is hitting: " + hit.collider.gameObject.tag);
             if (hit.collider.gameObject.CompareTag("Player")) {
                 //if close to player, pause movement & trigger attack
                 if (hit.distance < attackDist) {
@@ -147,9 +147,9 @@ public class EnemyController : MonoBehaviour
         Vector2 endPos = castPoint.position + Vector3.right * (viewDist/2);
         //Debug.Log("end point val: " + endPos);
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Walls"));
-        Debug.Log("Wall check Ray is hitting: "+hit.collider);
+        //Debug.Log("Wall check Ray is hitting: "+hit.collider);
         //check if found wall
-        Debug.DrawLine(castPoint.position, endPos, Color.red);
+        //Debug.DrawLine(castPoint.position, endPos, Color.red);
         if (hit.collider != null) {
             if (hit.collider.gameObject.CompareTag("Walls")) {
                 //Can see a wall
@@ -161,7 +161,7 @@ public class EnemyController : MonoBehaviour
 
 
     Vector3 PickRandomPoint() {
-        Debug.Log("Picking random point");
+        //Debug.Log("Picking random point");
         Vector3 point = Random.insideUnitSphere * radius;
         point.y = 0;
         point += enemyAI.position;
@@ -180,7 +180,7 @@ public class EnemyController : MonoBehaviour
 
 
     private void Attack(bool state) {
-        Debug.Log("Attack");
+        //Debug.Log("Attack");
         //Actually attack
         enemyAnimator.SetBool("attack", state);
         if (state) {

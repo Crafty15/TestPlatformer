@@ -774,6 +774,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.2D.Tilemap.Extras.csproj">
+      <Project>{57872D57-35E3-206C-C52C-3F27DDC503F5}</Project>
+      <Name>Unity.2D.Tilemap.Extras</Name>
+    </ProjectReference>
     <ProjectReference Include="PackageToolsEditor.csproj">
       <Project>{11B16421-D242-3E39-6DDC-5F3F895AAC6F}</Project>
       <Name>PackageToolsEditor</Name>
@@ -781,6 +785,10 @@
     <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
       <Project>{7D88BA19-56BD-34E8-4F3E-C6C6134E5D4B}</Project>
       <Name>AstarPathfindingProjectEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.2D.Tilemap.Extras.Editor.csproj">
+      <Project>{F7783AC0-2DA7-70A0-AC1E-6086DA671B0C}</Project>
+      <Name>Unity.2D.Tilemap.Extras.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="AstarPathfindingProject.csproj">
       <Project>{102249AF-EF77-C3CD-A243-7575FCC283AB}</Project>

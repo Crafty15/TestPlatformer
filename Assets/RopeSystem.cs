@@ -219,4 +219,9 @@ public class RopeSystem : MonoBehaviour
         isColliding = false;
     }
 
+/*    //enable/disable the rope system
+    public void IsEnabled(bool enabled) {
+
+    }*/
+
 }

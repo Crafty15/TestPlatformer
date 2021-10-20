@@ -67,8 +67,11 @@ public class CharacterController2D : MonoBehaviour {
 		for (int i = 0; i < colliders.Length; i++) {
 			if (colliders[i].gameObject != gameObject) {
 				m_Grounded = true;
-				if (!wasGrounded)
+				if (!wasGrounded) {
 					OnLandEvent.Invoke();
+					Debug.Log("Invoke landing");
+				}
+
 			}
 		}
 	}
@@ -199,7 +202,8 @@ public class CharacterController2D : MonoBehaviour {
 	public void KnockBack(float enemyLocalScaleX) {
 		//10 is a bit of a magic number :/
 		Vector2 kbVec = new Vector2((enemyLocalScaleX * knockBackForce) * 10, knockBackForce);
-		m_Rigidbody2D.velocity = kbVec;
+		//m_Rigidbody2D.velocity = kbVec;
+		m_Rigidbody2D.AddForce(kbVec, ForceMode2D.Impulse);
 	}
 
 	//damage
@@ -210,6 +214,11 @@ public class CharacterController2D : MonoBehaviour {
 	public void AddHealth() {
 		health++;
 	}
+
+	//
+	public void Die() {
+		//play a death sign
+    }
 
 
 }

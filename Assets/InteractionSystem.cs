@@ -72,6 +72,10 @@ public class InteractionSystem : MonoBehaviour
 
     public void PickUpItem(GameObject item) {
         pickedItems.Add(item);
+        if (item.name == "rope") {
+            GameObject player = GameObject.Find("Player");
+            player.GetComponent<PlayerMovement>().RopeSystemEnabled(true);
+        }
     }
 
     public void ExamineItem(Item item) {

@@ -82,6 +82,10 @@ public class GlobalController : MonoBehaviour
         return level;
     }
 
+    public static void SetLevel(int lastLevel) {
+        level = lastLevel;
+    }
+
 }
 
 //Struct for generating articles

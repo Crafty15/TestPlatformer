@@ -15,20 +15,18 @@ public class EndLevel : MonoBehaviour
         Debug.Log(sceneName + "Complete");
         player.GetComponent<InteractionSystem>().SavePlayerData();
         //if coming from a level, increment the level counter and load the end level scene
-        if (sceneName.Equals("Level1") || sceneName.Equals("Level2") || sceneName.Equals("Level3")) {
-            GlobalController.IncrementLevel();
-            Debug.Log(GlobalController.GetLevel());
+        if (sceneName.Equals("Level1")) {
+            GlobalController.SetLevel(1);
             SceneManager.LoadScene("EndLevel");        
         }
-        //if coming from endlevel scene, check level counter and load appropriate level
-/*        else if (sceneName.Equals("EndLevel")) {
-            if (GlobalController.GetLevel() == 1) {
-                SceneManager.LoadScene("Level2");
-            }
-            else if (GlobalController.GetLevel() == 2) {
-                SceneManager.LoadScene("Level3");
-            }
-        }*/
+        else if (sceneName.Equals("Level2")) {
+            GlobalController.SetLevel(2);
+            SceneManager.LoadScene("EndLevel");
+        }
+        else if (sceneName.Equals("Level3")) {
+            GlobalController.SetLevel(3);
+            SceneManager.LoadScene("EndLevel");
+        }
         else {
             SceneManager.LoadScene("MainMenu");
         }

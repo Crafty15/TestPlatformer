@@ -3314,7 +3314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   descriptionText: A handy rope!
-  image: {fileID: 21300000, guid: cad30d4454cd0a5489f275bd75b329d9, type: 3}
+  image: {fileID: 21300000, guid: 41394007ec5d28a4cb595be41b9da4d7, type: 3}
 --- !u!61 &254404634
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3332,7 +3332,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.8, y: 8.04}
+    oldSize: {x: 5, y: 4.01}
     newSize: {x: 5, y: 4.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3382,7 +3382,7 @@ SpriteRenderer:
   m_SortingLayerID: -540314417
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cad30d4454cd0a5489f275bd75b329d9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 41394007ec5d28a4cb595be41b9da4d7, type: 3}
   m_Color: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
   m_FlipX: 0
   m_FlipY: 0

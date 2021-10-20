@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,6 +26,13 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         sounds = GetComponents<AudioSource>();
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName.Equals("Level3")) {
+            RopeSystemEnabled(true);
+        }
+        else {
+            RopeSystemEnabled(false);
+        }
     }
 
     // Update is called once per frame
@@ -37,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && !isSwinging) {
                 jump = true;
                 animator.SetBool("isJumping", true);
+                Debug.Log("JUMP");
             }
             if (Input.GetButton("Crouch")) {
                 crouch = true;
@@ -96,12 +105,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLanding() {
         animator.SetBool("isJumping", false);
+        Debug.Log("Not Jump");
     }
 
     public void CheckGrounded() {
         grounded = controller.isGrounded();
         animator.SetBool("isGrounded", grounded);
-       // OnLanding();
+        //animator.SetBool("isJumping", false);
     }
 
     public void checkWallGrab() {
@@ -151,6 +161,12 @@ public class PlayerMovement : MonoBehaviour
         sounds[2].Play();
     }
 
+    //enable/disable the rope system
+    public void RopeSystemEnabled(bool enabled) {
+        gameObject.GetComponent<RopeSystem>().enabled = enabled;
+        GameObject crossHair = gameObject.transform.GetChild(5).gameObject;
+        crossHair.SetActive(enabled);
+    }
 
 
 
