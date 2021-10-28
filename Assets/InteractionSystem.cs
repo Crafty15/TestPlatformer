@@ -123,4 +123,9 @@ public class InteractionSystem : MonoBehaviour
         GlobalController.Instance.SetPickedItems(pickedItems);
     }
 
+    //
+    public int GetItemCount() {
+        return pickedItems.Count;
+    }
+
 }

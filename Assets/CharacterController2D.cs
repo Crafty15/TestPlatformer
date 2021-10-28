@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour {
 	[SerializeField] private float m_JumpForce = 1000f;                          // Amount of force added when the player jumps.
@@ -40,7 +41,7 @@ public class CharacterController2D : MonoBehaviour {
 
 	//Damage
 	int health = 3;
-	float knockBackTimer;
+	//float knockBackTimer;
 	float knockBackForce = 10f;
 
 	private void Awake() {
@@ -204,20 +205,30 @@ public class CharacterController2D : MonoBehaviour {
 		Vector2 kbVec = new Vector2((enemyLocalScaleX * knockBackForce) * 10, knockBackForce);
 		//m_Rigidbody2D.velocity = kbVec;
 		m_Rigidbody2D.AddForce(kbVec, ForceMode2D.Impulse);
+		TakeDamage();
 	}
 
-	//damage
-	public void TakeDamage() {
-		health--;
-	}
+    //damage
+    public void TakeDamage() {
+        health--;
+        if (health == 0) {
+			Debug.Log("Health == 0");
+			Die();
+        }
+    }
 
-	public void AddHealth() {
-		health++;
-	}
+    public void AddHealth() {
+        health++;
+    }
 
-	//
-	public void Die() {
-		//play a death sign
+    //
+    public void Die() {
+		Debug.Log("Die()");
+		SceneManager.LoadScene("DeathScene");
+    }
+
+	public int getHealth() {
+		return health;
     }
 
 

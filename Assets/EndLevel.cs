@@ -45,4 +45,21 @@ public class EndLevel : MonoBehaviour
         }
     }
 
+    public void Retry() {
+        Debug.Log("Retry");
+        Debug.Log("Global level: " + GlobalController.GetLevel());
+        if (GlobalController.GetLevel() == 1) {
+            SceneManager.LoadScene("Level1");
+        }
+        else if (GlobalController.GetLevel() == 2) {
+            SceneManager.LoadScene("Level2");
+        }
+        else if (GlobalController.GetLevel() == 3) {
+            SceneManager.LoadScene("Level3");
+        }
+        else {
+            SceneManager.LoadScene("MainMenu");
+        }      
+    }
+
 }
