@@ -81,14 +81,14 @@ public class PlayerMovement : MonoBehaviour
 
                 Vector2 force = perpendicularDirection * swingForce;
                 //DEBUG
-                Debug.Log("hMove: " + hMove);
+                /*Debug.Log("hMove: " + hMove);*/
                 /*Debug.Log("Transform.position x: " + transform.position.x);
                 Debug.Log("Transform.position y: " + transform.position.y);*/
-                Debug.Log("playerToHookDirection: "+playerToHookDirection);
+                /*Debug.Log("playerToHookDirection: "+playerToHookDirection);
                 Debug.Log("Total swinging force x: "+force.x);
                 Debug.Log("Total swinging force y: " + force.y);
                 Debug.Log("RopeHook x: " + ropeHook.x);
-                Debug.Log("RopeHook y: " + ropeHook.y);
+                Debug.Log("RopeHook y: " + ropeHook.y);*/
                 playerRB.AddForce(force);
             }
             else {

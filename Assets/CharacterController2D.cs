@@ -231,5 +231,12 @@ public class CharacterController2D : MonoBehaviour {
 		return health;
     }
 
+    void OnCollisionEnter2D(Collision2D collision) {
+		Debug.Log("Collision with: " + collision.collider.name);
+        if (collision.gameObject.CompareTag("Kill")) {
+			Die();
+        }
+    }
+
 
 }
