@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeathEffect : MonoBehaviour
 {
@@ -12,6 +13,26 @@ public class DeathEffect : MonoBehaviour
     public float fadeDuration;
     public float fadeBarrier;   //The point at which the transparency will stop and reverse
     //bool fromWhite = true;      //want to start from white and then to black by changing the transparency
+/*    private string currentScene;
+    private int recentScene;*/
+
+/*    private void Start() {
+        currentScene = SceneManager.GetActiveScene().name;
+        recentScene = GlobalController.GetLevel();
+        Debug.Log("Scene on death: "+ currentScene);
+        if (currentScene.Equals("Level1")) {
+            GlobalController.SetLevel(1);
+        }
+        else if (currentScene.Equals("Level2")) {
+            GlobalController.SetLevel(2);
+        }
+        else if (currentScene.Equals("Level3")) {
+            GlobalController.SetLevel(3);
+        }
+        else {
+            GlobalController.SetLevel(0);
+        }
+    }*/
 
     void Update(){
         //incrementally reduce the color values to fade the background

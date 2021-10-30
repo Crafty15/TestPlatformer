@@ -70,7 +70,7 @@ public class CharacterController2D : MonoBehaviour {
 				m_Grounded = true;
 				if (!wasGrounded) {
 					OnLandEvent.Invoke();
-					Debug.Log("Invoke landing");
+					//Debug.Log("Invoke landing");
 				}
 
 			}
@@ -212,7 +212,7 @@ public class CharacterController2D : MonoBehaviour {
     public void TakeDamage() {
         health--;
         if (health == 0) {
-			Debug.Log("Health == 0");
+			//Debug.Log("Health == 0");
 			Die();
         }
     }
@@ -223,7 +223,7 @@ public class CharacterController2D : MonoBehaviour {
 
     //
     public void Die() {
-		Debug.Log("Die()");
+		//Debug.Log("Die()");
 		SceneManager.LoadScene("DeathScene");
     }
 
@@ -232,7 +232,7 @@ public class CharacterController2D : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-		Debug.Log("Collision with: " + collision.collider.name);
+		//Debug.Log("Collision with: " + collision.collider.name);
         if (collision.gameObject.CompareTag("Kill")) {
 			Die();
         }

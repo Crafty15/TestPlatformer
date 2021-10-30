@@ -114,10 +114,10 @@ public class InteractionSystem : MonoBehaviour
 
     //save the player data
     public void SavePlayerData() {
-        Debug.Log("Saving picked up items");
+        //Debug.Log("Saving picked up items");
         if (pickedItems.Count > 0) {
             for (int i = 0; i < pickedItems.Count; i++) {
-                Debug.Log("Picked Items" + pickedItems[i].name);
+                //Debug.Log("Picked Items" + pickedItems[i].name);
             }
         }
         GlobalController.Instance.SetPickedItems(pickedItems);

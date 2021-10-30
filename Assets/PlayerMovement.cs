@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && !isSwinging) {
                 jump = true;
                 animator.SetBool("isJumping", true);
-                Debug.Log("JUMP");
+                //Debug.Log("JUMP");
             }
             if (Input.GetButton("Crouch")) {
                 crouch = true;
@@ -80,24 +80,10 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 Vector2 force = perpendicularDirection * swingForce;
-                //DEBUG
-                /*Debug.Log("hMove: " + hMove);*/
-                /*Debug.Log("Transform.position x: " + transform.position.x);
-                Debug.Log("Transform.position y: " + transform.position.y);*/
-                /*Debug.Log("playerToHookDirection: "+playerToHookDirection);
-                Debug.Log("Total swinging force x: "+force.x);
-                Debug.Log("Total swinging force y: " + force.y);
-                Debug.Log("RopeHook x: " + ropeHook.x);
-                Debug.Log("RopeHook y: " + ropeHook.y);*/
                 playerRB.AddForce(force);
             }
             else {
                 animator.SetBool("isSwinging", false);
-/*                if (grounded) {
-                    var groundForce = speed * 2f;
-                    rBody.AddForce(new Vector2((horizontalInput * groundForce - rBody.velocity.x) * groundForce, 0));
-                    rBody.velocity = new Vector2(rBody.velocity.x, rBody.velocity.y);
-                }*/
             }
         }
 
@@ -105,13 +91,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLanding() {
         animator.SetBool("isJumping", false);
-        Debug.Log("Not Jump");
     }
 
     public void CheckGrounded() {
         grounded = controller.isGrounded();
         animator.SetBool("isGrounded", grounded);
-        //animator.SetBool("isJumping", false);
     }
 
     public void checkWallGrab() {

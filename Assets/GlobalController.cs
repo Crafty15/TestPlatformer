@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalController : MonoBehaviour
 {
@@ -10,9 +11,14 @@ public class GlobalController : MonoBehaviour
     public List<GameObject> pickedItems = new List<GameObject>(); //Picked up item list
 
     static int level = 0;
+    //audio
+/*    [SerializeField]
+    public AudioClip[] music;
+    public AudioSource audioPlayer;*/
 
     private void Awake() {
         //DontDestroyOnLoad(gameObject);
+
         if (Instance != null) {
             Destroy(gameObject);
         }
@@ -21,6 +27,20 @@ public class GlobalController : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         //Debug.Log("Picked items 0: " + pickedItems[0]);
+/*        string name = SceneManager.GetActiveScene().name;
+        if (name.Equals("Level1")) {
+            audioPlayer.clip = music[0];
+            audioPlayer.Play();
+        }
+        else if (name.Equals("Level2")) {
+            audioPlayer.clip = music[1];
+            audioPlayer.Play();
+        }
+        else if (name.Equals("Level3")) {
+            audioPlayer.clip = music[3];
+            audioPlayer.Play();
+        }*/
+
     }
 
     //Generate an article to display based on the game objects collected
